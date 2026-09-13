@@ -304,7 +304,7 @@ export class App {
       [`Time bonus · ${r.secondsLeft}s`, r.timeBonus],
     ] as const;
     const rowEls = rows.map(([label, value]) => h('div', { class: 'tally-row' }, h('span', {}, label), h('b', { 'data-value': value }, '0')));
-    const totalEl = h('div', { class: 'tally-row total' }, h('span', {}, mode === 'run' ? 'Score' : 'Total'), h('b', {}, formatScore(mode === 'run' ? r.finalScore - r.clearBonus - r.timeBonus : r.pointsBeforeBonus)));
+    const totalEl = h('div', { class: 'tally-row total on' }, h('span', {}, mode === 'run' ? 'Score' : 'Total'), h('b', {}, formatScore(mode === 'run' ? r.finalScore - r.clearBonus - r.timeBonus : r.pointsBeforeBonus)));
     const starEls = [0, 1, 2].map(() => h('span', { class: 'star', 'aria-hidden': 'true' }, '★'));
     const nextBtn = h('button', { class: 'btn primary big', onclick: () => { audio.ui(); next(); } }, nextLabel);
     screen.showDialog(h('div', { class: 'dialog panel', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Problem cleared' },

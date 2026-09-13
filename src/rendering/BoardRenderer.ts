@@ -54,7 +54,10 @@ export class BoardRenderer {
     const cw = c.x1 - c.x0 + 1, ch = c.y1 - c.y0 + 1;
     // a little room around the playfield for the glow and blasts at the edge
     const margin = crop ? 0.35 : 0;
-    const cell = Math.max(8, Math.floor(Math.min(pw / (cw + margin * 2), ph / (ch + margin * 2))));
+    // never zoom a small level past 1.4x the size a full 14x12 board would get: tiny levels
+    // should look like the same game, not a close-up
+    const fullFit = Math.min(pw / boardW, ph / boardH);
+    const cell = Math.max(8, Math.floor(Math.min(pw / (cw + margin * 2), ph / (ch + margin * 2), fullFit * 1.4)));
     if (!this.sprites || this.sprites.cell !== cell) {
       this.sprites = new SpriteSet(cell);
       this.staticKey = '';
