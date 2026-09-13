@@ -13,3 +13,11 @@ async function boot(): Promise<void> {
 }
 
 void boot();
+
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      // offline support is a bonus; the game runs without it
+    });
+  });
+}
