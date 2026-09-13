@@ -13,7 +13,7 @@ away before the clock runs out. Same puzzles, completely modern game.
   original executable's *own* level loader. `npm run validate-levels` → `112 / 112 levels match`.
 - **Rules.** The original `BRIX.EXE` runs in a small 8086/DOS emulator in
   `tools/brix-oracle/`. Bots played every level in it while every key pass, fall step and
-  elevator step was recorded. The modern engine replays those 112 traces — about 300,000
+  elevator step was recorded. The modern engine replays those 112 traces — over 230,000
   steps — and must reproduce the original's state after every single one, including the
   original's quirks (latched keys, stale elevator stack counts, duplicate stack matches).
 - **Completion.** A solver finds solutions with the modern engine; they replay as timed

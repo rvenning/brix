@@ -245,7 +245,8 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; letter-spacing: 0.01em
 /* ---------- settings / help / scores ---------- */
 
 .narrow { width: min(560px, 100%); margin: 0 auto; }
-.setting { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--panel-edge); }
+.setting { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 14px 18px; border-bottom: 1px solid var(--panel-edge); }
+.setting-text { flex: 1 1 180px; }
 .setting:last-child { border-bottom: 0; }
 .setting-text { display: grid; gap: 2px; }
 .setting-text small { color: var(--ink-faint); line-height: 1.4; }
