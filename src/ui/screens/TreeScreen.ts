@@ -46,7 +46,7 @@ export class TreeScreen implements Screen {
             line.setAttribute('x2', String(to.x)); line.setAttribute('y2', String(to.y));
             const lit = session.tree[c][r] === Node.Done && session.tree[c + 1][nr] !== Node.Locked;
             line.setAttribute('stroke', lit ? 'rgba(124,240,255,0.7)' : 'rgba(150,170,255,0.18)');
-            line.setAttribute('stroke-width', lit ? '0.6' : '0.35');
+            line.setAttribute('stroke-width', lit ? '3' : '2');
             line.setAttribute('vector-effect', 'non-scaling-stroke');
             links.append(line);
           }
@@ -56,8 +56,9 @@ export class TreeScreen implements Screen {
           line.setAttribute('x1', String(from.x)); line.setAttribute('y1', String(from.y));
           line.setAttribute('x2', String(to.x)); line.setAttribute('y2', String(to.y));
           line.setAttribute('stroke', 'rgba(255,216,74,0.25)');
-          line.setAttribute('stroke-dasharray', '1 1');
-          line.setAttribute('stroke-width', '0.35');
+          line.setAttribute('stroke-dasharray', '4 4');
+          line.setAttribute('stroke-width', '2');
+          line.setAttribute('vector-effect', 'non-scaling-stroke');
           links.append(line);
         }
         const state = session.tree[c][r];
