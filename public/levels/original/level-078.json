@@ -1,0 +1,49 @@
+{
+  "format": "brix-level/1",
+  "id": "original-078",
+  "number": 78,
+  "origin": "original",
+  "tree": {
+    "level": 6,
+    "choice": 5,
+    "problem": 2
+  },
+  "width": 14,
+  "height": 12,
+  "tiles": [
+    "   ####       ",
+    "   #..#       ",
+    "   #..#       ",
+    "   #..#       ",
+    "   #1.#       ",
+    "   #5.#       ",
+    "   #45#       ",
+    "   #34#       ",
+    "   #23#       ",
+    "   #12#       ",
+    "   #E1#       ",
+    "   ####       "
+  ],
+  "cursor": {
+    "x": 4,
+    "y": 1
+  },
+  "elevator": {
+    "x": 4,
+    "y": 10,
+    "direction": -1
+  },
+  "timeLimit": {
+    "minutes": 2,
+    "seconds": 30
+  },
+  "original": {
+    "offset": 13706,
+    "elevatorDirectionByte": 1,
+    "secondaryElevator": [
+      0,
+      0,
+      0
+    ]
+  }
+}

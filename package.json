@@ -1,0 +1,24 @@
+{
+  "name": "modern-brix",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A modern reimplementation of Michael Riedel's BRIX (1991), with the original 112 levels extracted bit-for-bit.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "extract-levels": "node tools/brix-extractor/extract.ts",
+    "validate-levels": "node tools/brix-extractor/validate.ts",
+    "record-fixtures": "node tools/brix-oracle/record-fixtures.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.7"
+  }
+}
