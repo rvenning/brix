@@ -1,5 +1,7 @@
 # BRIX, reimagined
 
+**Play it: [rvenning.github.io/brix](https://rvenning.github.io/brix/)**
+
 A modern, touch-friendly web game built on **BRIX 1.00** — Michael Riedel's 1991
 public-domain DOS puzzle game — with **all 112 original puzzles reproduced exactly**.
 
