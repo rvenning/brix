@@ -1,0 +1,326 @@
+{
+ "format": "brix-oracle-trace/1",
+ "level": 75,
+ "levelId": "original-075",
+ "description": "The original BRIX.EXE driven by a seeded explorer bot. Replaying these events through the modern rules must reproduce every state hash.",
+ "recording": {
+  "controller": "explorer",
+  "seed": 593925,
+  "emulatedMs": 15070
+ },
+ "ended": null,
+ "initial": {
+  "board": [
+   "              ",
+   "              ",
+   "              ",
+   "              ",
+   "              ",
+   "##########    ",
+   "#.......7#    ",
+   "#......72#    ",
+   "#...5..23#    ",
+   "#64.42.47#    ",
+   "#45.61213#    ",
+   "##########    "
+  ],
+  "cursor": [
+   1,
+   6
+  ],
+  "carrying": 0,
+  "riding": 0,
+  "cursorFalling": 0,
+  "falling": [],
+  "fallOffset": 0,
+  "elevator": null,
+  "chain": 0,
+  "remaining": 19,
+  "counts": [
+   0,
+   2,
+   4,
+   2,
+   4,
+   2,
+   2,
+   3,
+   0
+  ],
+  "score": 0,
+  "latched": 0
+ },
+ "eventCount": 1943,
+ "events": "l4d k:1c083a48 f*3 e f*3 e f*3 e f*3 e:? l4d k:fb995f2b f*2 e f*3 e f*3 e f*3 e f:? l4d k:139f543a f*2 e f*3 e f*3 e f*3 e f:? l4d k:e6ab376d f*2 e f*3 e f*3 e f*3 e f:? l4d k:113b77dc f*2 e f*3 e f*3 e f*3 e f:? l4d k:176fc87f f*2 e f*3 e f*3 e f*3 e f:? l50 k:3f559ec4 f*2 e f*3 e f*3 e f*3 e f:? l20 k:738159c7 f*2 e f*3 e f*3 e f*3 e f*3 e:? l4b k:34b9e1c4 f:831a7a83 f:484dd5ac f:659830f1 e f:578f2d82 f:648473f7 f:4319ee50 e f:039c22a5 f:1a167466 f:9508efbb e f:3b656be3 f:9f4c088e f:aaa461d1 e f:? l20 k:cc8b9711 f:9c004994 k f:259a5edb e k f:b0b30fe7 k:1a1fa157 f:adf3c603 f:7327212c e f:90717c71 f:82687902 f:8f5dbf77 e f:6df339d0 f:2e756e25 f:44efbfe6 e f:? l4b k:3ded33b0 f:82a069ca f:e4d703bf e f:a73c4898 f:b2fbe4ed f:90e679f6 e f:969edd4b f:4e03a30d f:57d1134b e f*3 e f:? l4b k:c4403040 f*2 e f*3 e f*3 e f*3 e f:? l4b k:3cc2a18d f*2 e f*3 e f*3 e f*3 e f:? l4b k:997550f2 f*2 e f*3 e f*3 e f*3 e f:? l50 k:84f16795 f*2 e f*3 e f*3 e f*3 e f:? l50 k:5e131adf f*2 e f*3 e f*3 e f*3 e f:? l20 k:a099c2bc f*2 e f*3 e f*3 e f*3 e f*3 e:? l4d k:9d504f05 f:a0df9b39 f:5142af76 f:56fb12cb e f:67987e18 f:73581a6d f:42fc9f4a e f:a533393f f:64a2fd7c f:4d9add41 e f:31dd8abd f:ea0b0e28 f:72ee5f8f e f:? l4d k:f5c97276 f:179b9e97 k f:34b611bc e k f:5ada92f4 k f:? l20 l20 l20 l20 l20 l20 l20 l20 l20 k:1cd7b92d f:f98cfbd2 e f:80c32c65 f:59ffb0d0 f:7ec1e433 e:? l4d k:79a5bb22 f:7a93d6e7 f:2568faa0 f:ebd5eff5 e f:39b6d126 f:2cf3d4db f:3e27fb59 e f:769ac614 f:91d97a9b f:99f48be6 e f:4ccee16d f:9e512258 f:534b4016 e f:? l48 k:284ee804 f*2 e f*3 e f*3 e f*3 e f:? l48 k:ebb7e817 f*2 e f*3 e f*3 e f*3 e f:? l20 k:7ea7441c f*2 e f*3 e f*3 e f*3 e f*3 e:? l4b k:f508d007 f:71bb3faa f:ad887a9d f:b9e38c18 e f:e93302bb f:42a8f566 f:80320d69 e f:69a01084 f:c1243817 f:ac349902 e f:31e91e32 f:be0c2087 f:6f591320 e f:? l20 k:2a223696 f:3ab8d17f k f:623b1cd8 e k f:2dd826ba k:06fe919c f:? l50 l50 l50 l50 l50 l50 l50 l50 l50 k:966bb586 f e f*3 e f*3 e f*3 e f*3 e f*3 e f:? l4d k:341da5fd f*2 e f*3 e f*3 e f*3 e f:? l20 k:c0c5a98a f*2 e f*3 e f*3 e f*3 e f f:? l4b k:758ac24b f:dd866875 f:19e7032a e f:4b578bd7 f:b782955c f:d2ff53b9 e f:544e2d4e f:fee7f1ab f:30130f80 e f:a5b32d6d f:86369ce5 f:38e69378 e f:0e3a48c7 f:? l20 k:7c9e92b9 f:c386422a e f:f4f6cad7 f:7306f7e9 f:f37924dc e f*3 e f*3 e f*3 e:? l4d k:98b41c37 f*2 e f*3 e f*3 e f*3 e f:? l4d k:af15b38a f*2 e f*3 e f*3 e f*3 e f:? l48 k:5d2d9bfe f*2 e f*3 e f*3 e f*3 e f:? l20 k:68e63275 f*2 e f*3 e f*3 e f*3 e f*3 e:? l4b k:0404fc5e f*3 e f*3 e f*3 e f*3 e f:? l4b k:4f2c73fb f*2 e f*3 e f*3 e f*3 e f:? l4b k:bd3c761c f:83f71c79 f:994c180e e f:f6bd326b f:34943088 f:37f22035 e f:ba782dea f:f0b70597 f:77e261f4 e f:1b956051 f:198f2441 f:ae021564 e f:cd9a6dd3 f:? l20 k:68048e17 f:9f903f1e e k f:3204419d k f:d709d582 k:fde04e6c f:efa87c49 e f*3 e f*3 e f*3 e:? l4d k:c7b20544 f*2 e f*3 e f*3 e f*3 e f:? l4d k:fd4e94ff f*2 e f*3 e f*3 e f*3 e f f:? l4d k:31ab4712 f e f*3 e f*3 e f*3 e f f:? l4d k:dc17387d f*2 e f*3 e f*3 e f*3 e f:? l48 k:5e5ae0af f*2 e f*3 e f*3 e f*3 e f f:? l20 k:f1f21868 f e f*3 e f*3 e f*3 e f*3 e:? l4b k:daa0e12d f*2 e f*3 e f*3 e f*3 e f:? l4b k:28c0c83e f*2 e f*3 e f*3 e f*3 e f f:? l4b k:51e1f553 f e f*3 e f*3 e f*3 e f f:? l20 k:4b12e31c f e f*3 e f*3 e f*3 e f*3 e f:? l20 k:51e1f553 f*2 e f*3 e f*3 e f*3 e f:? l4d k:28c0c83e f*2 e f*3 e f*3 e f*3 e f f:? l20 k:055abeb5 f e f*3 e f*3 e f*3 e f*3 e:? l4d k:1796ece6 f*2 e f*3 e f*3 e f*3 e f:? l4d k:1b785f4f f*2 e f*3 e f*3 e f*3 e f:? l4d k:1ac71468 f*2 e f*3 e f*3 e f*3 e f:? l4d k:fe8db871 f*2 e f*3 e f*3 e f*3 e f f:? l48 k:3c30c872 f e f*3 e f*3 e f*3 e f f:? l48 k:f4b0a407 f*2 e f*3 e f*3 e f*3 e f f:? l48 k:70879618 f e f*3 e f*3 e f*3 e f f:? l20 k:2112e25f f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:a61b1272 f:728e59e5 f:b091e31a e f:fa9205c7 f:b0a618cc f:b4ab2e69 e f:a4d9c83e f:429af05b f:e58ed3b0 e f:8a3f015d f:76d8d055 f:78435328 e f:? l4b k:1755b9c7 f:28d19208 k f:7cd375a1 e k f:7b360be2 k f:117af078 k f:a6b56b69 e k:c92aa23a f:ea2816fd f:29f53d32 f:b1bd8a7f e f:6203d504 f:6f879161 f:10eda8f6 e f:4c309973 f:? l4b k:9eb7f1c6 f:cf60aab5 e k f:e7bd3dfd k f:0fbb302e k f:81231c7f e k f:9a4a58a0 k f:5322fad9 k f:6be8c53a e k f:2b63a8f6 k f:e3e696bb k f:9ee1196a e k f:a3470589 k f:7b1b9790 k f:3cfe6c6f e k k:? l20 k:897559bc f:19f2308d k f:1e68c74e k f:4cff3f7f e k f:a85dc3f0 k f:945ebd6c k f:3beccaab e k f:8191b87e k f:6964ccfd k f:be25b788 e k f:b2ca7a77 k f:b008c905 k:58cffcf1 f:c98ed2cf e f:? l4d k:c8dd87e8 f*2 e f*3 e f*3 e f*3 e f f:? l48 k:ac82db97 f e f*3 e f*3 e f*3 e f f:? l20 k:b933ed30 f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:10edd54f f*2 e f*3 e f*3 e f*3 e f:? l4b k:874873ae f:51a2b9d5 f:a94a500a e f:713d68b7 f:0f613cbc f:e5250819 e f:e22e1f2e f:5b6c2d8b f:4fdecb60 e f:c84df9cd f:40bc99c5 f:8bc32858 e f:3055b027 f:? l20 k:e9da0723 f:3dc573e2 e k f:34f9f731 k f:a5cebadb k:2042ccbb f:cb808b06 e f*3 e f*3 e f*3 e:? l4d k:859aafef f*2 e f*3 e f*3 e f*3 e f:? l4d k:f4d11288 f*2 e f*3 e f*3 e f*3 e f f:? l4d k:771c4291 f e f*3 e f*3 e f*3 e f f:? l48 k:fac5b092 f*2 e f*3 e f*3 e f*3 e f f:? l20 k:008d8b49 f e f*3 e f*3 e f*3 e f*3 e:? l4b k:d2e5b1e0 f:e5e74f42 f:f14b3e8d e f:51e34e20 f:d64848c3 f:01771d06 e f:f85ecc31 f:ac3bf954 f:126bf077 e f:8d49ceca f:35b8ca88 f:3916ba35 e f:bb9cc7ea f:? l20 k:bc5700fc f:0770a1f7 e f:824e804a f:e8f0f9e2 f:40f3e01f e f*3 e f*3 e f f:? l20 k:0773a2d8 f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:10e8f977 f*2 e f*3 e f*3 e f*3 e f:? l4b k:866df9b6 f*2 e f*3 e f*3 e f*3 e f f:? l20 k:c4f49c6d f e f*3 e f*3 e f*3 e f*3 e:? l4d k:29c39208 f*2 e f*3 e f*3 e f*3 e f:? l4d k:781b087f f*2 e f*3 e f*3 e f*3 e f f:? l4d k:f879190a f e f*3 e f*3 e f*3 e f f:? l20 k:45db2821 f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:0614d778 f*2 e f*3 e f*3 e f*3 e f:? l20 k:d3d45dbf f*2 e f*3 e f*3 e f*3 e f f:? l20 k:0614d778 f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:92d1ac4f f*2 e f*3 e f*3 e f*3 e f:? l4b k:47bd7a6f f k f e k f k f k f e k f k f k f e k f k f k f e k f k f k f e:? l20 k:cb3fb988 f*3 e f*3 e f*3 e f*3 e f:? l4b k:6670c3ed f*2 e f*3 e f*3 e f*3 e f:? l4d k:cb3fb988 f*2 e f*3 e f*3 e f*3 e f f:? l4b k:6670c3ed f e f*3 e f*3 e f*3 e f f:? l20 k:27ea2136 f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:6cd4939d f*2 e f*3 e f*3 e f*3 e f:? l20 k:286d48a6 f*2 e f*3 e f*3 e f*3 e f f:? l4d k:7866f695 f*2 e f*3 e f*3 e f*3 e f f:? l4d k:7b9bb250 f e f*3 e f*3 e f*3 e f f:? l20 k:843e6237 f e f*3 e f*3 e f*3 e f*3 e f:? l4b k:c9e350be f:? l4b l4b l20 l20 l20 l20 l20 l20",
+ "checkpoints": [
+  {
+   "event": 1,
+   "state": {
+    "board": [
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "##########    ",
+     "#.......7#    ",
+     "#......72#    ",
+     "#...5..23#    ",
+     "#64.42.47#    ",
+     "#45.61213#    ",
+     "##########    "
+    ],
+    "cursor": [
+     2,
+     6
+    ],
+    "carrying": 0,
+    "riding": 0,
+    "cursorFalling": 0,
+    "falling": [],
+    "fallOffset": 0,
+    "elevator": null,
+    "chain": 0,
+    "remaining": 19,
+    "counts": [
+     0,
+     2,
+     4,
+     2,
+     4,
+     2,
+     2,
+     3,
+     0
+    ],
+    "score": 0,
+    "latched": 0
+   }
+  },
+  {
+   "event": 417,
+   "state": {
+    "board": [
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "##########    ",
+     "#.......7#    ",
+     "#.......2#    ",
+     "#...5..23#    ",
+     "#...42747#    ",
+     "#6.561213#    ",
+     "##########    "
+    ],
+    "cursor": [
+     4,
+     8
+    ],
+    "carrying": 1,
+    "riding": 0,
+    "cursorFalling": 0,
+    "falling": [],
+    "fallOffset": 0,
+    "elevator": null,
+    "chain": 2,
+    "remaining": 17,
+    "counts": [
+     0,
+     2,
+     4,
+     2,
+     2,
+     2,
+     2,
+     3,
+     0
+    ],
+    "score": 100,
+    "latched": 0
+   }
+  },
+  {
+   "event": 822,
+   "state": {
+    "board": [
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "##########    ",
+     "#.......7#    ",
+     "#.......2#    ",
+     "#......23#    ",
+     "#.....747#    ",
+     "#62641213#    ",
+     "##########    "
+    ],
+    "cursor": [
+     6,
+     9
+    ],
+    "carrying": 1,
+    "riding": 0,
+    "cursorFalling": 0,
+    "falling": [],
+    "fallOffset": 0,
+    "elevator": null,
+    "chain": 0,
+    "remaining": 15,
+    "counts": [
+     0,
+     2,
+     4,
+     2,
+     2,
+     0,
+     2,
+     3,
+     0
+    ],
+    "score": 200,
+    "latched": 0
+   }
+  },
+  {
+   "event": 1225,
+   "state": {
+    "board": [
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "##########    ",
+     "#........#    ",
+     "#.......2#    ",
+     "#......23#    ",
+     "#...7.747#    ",
+     "#62641213#    ",
+     "##########    "
+    ],
+    "cursor": [
+     6,
+     9
+    ],
+    "carrying": 0,
+    "riding": 0,
+    "cursorFalling": 0,
+    "falling": [
+     [
+      6,
+      8
+     ]
+    ],
+    "fallOffset": 0,
+    "elevator": null,
+    "chain": 0,
+    "remaining": 15,
+    "counts": [
+     0,
+     2,
+     4,
+     2,
+     2,
+     0,
+     2,
+     3,
+     0
+    ],
+    "score": 200,
+    "latched": 0
+   }
+  },
+  {
+   "event": 1633,
+   "state": {
+    "board": [
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "##########    ",
+     "#........#    ",
+     "#........#    ",
+     "#....3.2.#    ",
+     "#...72747#    ",
+     "#62641213#    ",
+     "##########    "
+    ],
+    "cursor": [
+     7,
+     8
+    ],
+    "carrying": 1,
+    "riding": 0,
+    "cursorFalling": 0,
+    "falling": [],
+    "fallOffset": 0,
+    "elevator": null,
+    "chain": 0,
+    "remaining": 15,
+    "counts": [
+     0,
+     2,
+     4,
+     2,
+     2,
+     0,
+     2,
+     3,
+     0
+    ],
+    "score": 200,
+    "latched": 0
+   }
+  },
+  {
+   "event": 1942,
+   "state": {
+    "board": [
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "              ",
+     "##########    ",
+     "#........#    ",
+     "#........#    ",
+     "#...3....#    ",
+     "#...7.747#    ",
+     "#62641213#    ",
+     "##########    "
+    ],
+    "cursor": [
+     5,
+     8
+    ],
+    "carrying": 0,
+    "riding": 0,
+    "cursorFalling": 0,
+    "falling": [],
+    "fallOffset": 0,
+    "elevator": null,
+    "chain": 2,
+    "remaining": 13,
+    "counts": [
+     0,
+     2,
+     2,
+     2,
+     2,
+     0,
+     2,
+     3,
+     0
+    ],
+    "score": 300,
+    "latched": 32
+   }
+  }
+ ]
+}
