@@ -8,7 +8,7 @@ import { Backdrop } from '../rendering/backdrop.ts';
 import { drawWordmark } from '../rendering/wordmark.ts';
 import { blockIcon } from '../rendering/thumbnails.ts';
 import {
-  COMMAND_ORDER, addHighScore, loadCustomLevels, loadHighScores, loadRecords, loadRun, loadSettings,
+  COMMAND_ORDER, addHighScore, type ReplayData, loadCustomLevels, loadHighScores, loadRecords, loadRun, loadSettings,
   prefersReducedMotion, qualifiesForHighScore, saveCustomLevels, saveRecord, saveRun, saveSettings,
   type LevelRecord, type Settings,
 } from '../storage/storage.ts';
@@ -216,7 +216,7 @@ export class App {
     });
   }
 
-  private startPlay(level: LevelData, mode: PlayMode, extra: { where: string; score?: number; clock?: ClockState; retriesLeft?: number }): void {
+  private startPlay(level: LevelData, mode: PlayMode, extra: { where: string; score?: number; clock?: ClockState; retriesLeft?: number; replay?: ReplayData }): void {
     this.go('PLAYING');
     if (this.settings.music) audio.startMusic();
     const screen: PlayScreen = new PlayScreen(this, level, {
@@ -228,7 +228,7 @@ export class App {
       onQuit: () => this.onQuit(mode, level),
     });
     this.show(screen);
-    this.bumpRecord(level.id, r => ({ ...r, plays: r.plays + 1 }));
+    if (mode !== 'replay') this.bumpRecord(level.id, r => ({ ...r, plays: r.plays + 1 }));
   }
 
   private onRetry(level: LevelData, mode: PlayMode, clock: ClockState, score: number, where: string): void {
@@ -251,7 +251,7 @@ export class App {
   private onQuit(mode: PlayMode, level: LevelData): void {
     audio.stopMusic();
     if (mode === 'test') { this.go('EDITOR'); this.openEditor(level, true); return; }
-    if (mode === 'practice') { this.showBrowser(); return; }
+    if (mode === 'practice' || mode === 'replay') { this.showBrowser(); return; }
     this.showTitle();
   }
 
@@ -262,6 +262,15 @@ export class App {
 
   private onCleared(screen: PlayScreen, level: LevelData, mode: PlayMode, r: ClearedResult): void {
     this.go('LEVEL_COMPLETE');
+    if (mode === 'replay') {
+      screen.showDialog(h('div', { class: 'dialog panel', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Replay finished' },
+        h('h2', {}, 'Replay finished'),
+        h('p', {}, `${formatScore(r.pointsBeforeBonus + r.clearBonus + r.timeBonus)} points with ${r.secondsLeft}s to spare.`),
+        h('div', { class: 'actions' },
+          h('button', { class: 'btn primary big', onclick: () => this.startPractice(level) }, 'Play it yourself'),
+          h('button', { class: 'btn ghost', onclick: () => this.showBrowser() }, 'Levels'))));
+      return;
+    }
     let improved = false;
     if (level.origin === 'original' || mode !== 'test') {
       this.bumpRecord(level.id, rec => {
@@ -274,7 +283,8 @@ export class App {
           stars: Math.max(rec.stars, r.stars),
           bestPoints: Math.max(rec.bestPoints, points),
           bestSeconds: rec.bestSeconds === null ? r.secondsUsed : Math.min(rec.bestSeconds, r.secondsUsed),
-          replay: improved ? { levelId: level.id, blastFreezeMs: r.blastFreezeMs, inputs: r.inputs.map(i => [i.counts, COMMAND_ORDER.indexOf(i.command)]) } : rec.replay,
+          // only a practice clear without retries starts from the level's own initial state
+          replay: improved && mode === 'practice' && !r.retried ? { levelId: level.id, blastFreezeMs: r.blastFreezeMs, inputs: r.inputs.map(i => [i.counts, COMMAND_ORDER.indexOf(i.command)]) } : rec.replay,
         };
       });
     }
@@ -429,6 +439,13 @@ export class App {
   private startPractice(level: LevelData): void {
     const t = level.tree;
     this.startPlay(level, 'practice', { where: t ? `<b>Level ${t.level}</b> · Choice ${t.choice} · Problem ${t.problem}` : `<b>${level.name ?? 'Custom level'}</b>` });
+  }
+
+  startReplay(level: LevelData): void {
+    const replay = this.records[level.id]?.replay;
+    if (!replay) return;
+    const t = level.tree;
+    this.startPlay(level, 'replay', { where: `<b>Replay</b> · ${t ? `Level ${t.level} · Choice ${t.choice} · Problem ${t.problem}` : level.name ?? ''}`, replay });
   }
 
   startTest(level: LevelData): void {

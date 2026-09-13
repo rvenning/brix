@@ -10,16 +10,19 @@ import { blockIcon } from '../../rendering/thumbnails.ts';
 import { audio } from '../../audio/audio.ts';
 import { h, svgIcon, formatScore, formatClock, focusFirst } from '../dom.ts';
 import type { App, Screen } from '../App.ts';
+import { COMMAND_ORDER, type ReplayData } from '../../storage/storage.ts';
 
 export const MODERN_BLAST_FREEZE_MS = 760;
 
-export type PlayMode = 'run' | 'practice' | 'test';
+export type PlayMode = 'run' | 'practice' | 'test' | 'replay';
 
 export interface PlayScreenOptions {
   mode: PlayMode;
   score?: number;
   clock?: ClockState;
   retriesLeft?: number;
+  /** Recorded inputs to play back (mode 'replay'). */
+  replay?: ReplayData;
   /** Shown above the board, e.g. "Level 3 · Choice 2 · Problem 1 of 4". */
   where: string;
   onCleared(result: ClearedResult): void;
@@ -79,8 +82,10 @@ export class PlayScreen implements Screen {
   constructor(app: App, level: LevelData, opts: PlayScreenOptions) {
     this.app = app;
     this.opts = opts;
-    this.blastFreezeMs = app.settings.classicBlastTiming ? ORIGINAL_BLAST_FREEZE_MS : MODERN_BLAST_FREEZE_MS;
+    // a replay must run with the blast freeze it was recorded with, or its inputs land at other moments
+    this.blastFreezeMs = opts.replay?.blastFreezeMs ?? (app.settings.classicBlastTiming ? ORIGINAL_BLAST_FREEZE_MS : MODERN_BLAST_FREEZE_MS);
     this.play = new Play(level, { blastFreezeMs: this.blastFreezeMs, score: opts.score, clock: opts.clock, retriesLeft: opts.retriesLeft });
+    if (opts.replay) this.play.startReplay(opts.replay.inputs.map(([counts, c]) => ({ counts, command: COMMAND_ORDER[c] })));
     this.startScore = this.play.state.score;
     this.bounds = BoardRenderer.playfieldBounds(level.tiles);
     this.limitSeconds = Math.max(1, level.timeLimit.minutes * 60 + level.timeLimit.seconds);
@@ -138,7 +143,7 @@ export class PlayScreen implements Screen {
     this.introUntil = performance.now() + (this.app.reducedMotion ? 350 : 1000);
     const card = h('div', { class: 'overlay', style: 'background: transparent' },
       h('div', { class: 'intro-card' },
-        h('div', { class: 'kicker' }, this.opts.mode === 'test' ? 'Test play' : 'Get ready'),
+        h('div', { class: 'kicker' }, this.opts.mode === 'test' ? 'Test play' : this.opts.mode === 'replay' ? 'Replay' : 'Get ready'),
         h('div', { class: 'big' }, level.tree ? `${level.tree.level}-${level.tree.choice}-${level.tree.problem}` : (level.name ?? 'Custom')),
       ));
     this.boardWrap.append(card);
@@ -371,7 +376,7 @@ export class PlayScreen implements Screen {
   }
 
   private retry(fromPause = false): void {
-    if (this.ended) return;
+    if (this.ended || this.opts.mode === 'replay') return;
     const s = this.play.state;
     if (this.opts.mode === 'run' && s.retriesLeft === 0 && !fromPause) return;
     audio.ui();

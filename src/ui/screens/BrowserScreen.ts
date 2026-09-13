@@ -41,7 +41,7 @@ export class BrowserScreen implements Screen {
           const level = levels[i];
           const rec = records[level.id];
           const open = isUnlocked(i, levels, records);
-          problems.append(h('button', {
+          const tile = h('button', {
             class: 'problem',
             disabled: !open,
             'aria-label': `Problem ${lv}-${ch}-${p}${rec?.cleared ? `, cleared, ${rec.stars} stars, best ${rec.bestPoints} points` : open ? '' : ', locked'}`,
@@ -51,7 +51,9 @@ export class BrowserScreen implements Screen {
           h('img', { src: levelPreview(level, 10), alt: '' }),
           h('span', { class: 'num' }, `${lv}-${ch}-${p}`),
           h('span', { class: 'mini-stars', 'aria-hidden': 'true' }, rec?.cleared ? '★'.repeat(rec.stars) + '☆'.repeat(3 - rec.stars) : ''),
-          ));
+          );
+          problems.append(h('div', { class: 'problem-wrap' }, tile,
+            rec?.replay ? h('button', { class: 'replay-btn', 'aria-label': `Watch best replay of ${lv}-${ch}-${p}`, title: 'Watch best replay', html: svgIcon('play'), onclick: () => app.startReplay(level) }) : null));
         }
         choices.append(h('div', { class: 'choice panel' }, h('div', { class: 'choice-head' }, h('span', {}, `Choice ${ch}`), h('span', {}, `${[1, 2, 3, 4].filter(p => records[levels[treeIndex(lv, ch, p)].id]?.cleared).length}/4`)), problems));
       }

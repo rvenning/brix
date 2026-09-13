@@ -4,7 +4,7 @@
 // Rules live in rules.ts; timing in simulation.ts. This class only sequences them.
 
 import { createGame, peek } from './rules.ts';
-import { Simulation } from './simulation.ts';
+import { PIT_HZ, Simulation } from './simulation.ts';
 import { Command, type GameEvent, type GameState, type GridPosition } from './types.ts';
 import { Tile, isBlock, type LevelData } from '../levels/format.ts';
 import type { ClockState } from './types.ts';
@@ -44,9 +44,39 @@ export class Play {
 
   get status() { return this.state.status; }
 
+  private replay: InputRecord[] | null = null;
+  private replayIndex = 0;
+  private replayTarget = 0;
+
+  /** Play back recorded inputs at exactly their recorded simulated times; live input is ignored. */
+  startReplay(inputs: InputRecord[]): void {
+    this.replay = inputs;
+    this.replayIndex = 0;
+    this.replayTarget = this.sim.counts;
+  }
+
+  get replaying(): boolean {
+    return this.replay !== null;
+  }
+
+  private updateReplay(dtMs: number): void {
+    const inputs = this.replay!;
+    this.replayTarget += (dtMs * PIT_HZ) / 1000;
+    while (this.replayIndex < inputs.length && inputs[this.replayIndex].counts <= this.replayTarget && this.state.status === 'playing') {
+      const input = inputs[this.replayIndex++];
+      while (this.sim.counts < input.counts && this.state.status === 'playing') this.sim.step();
+      this.sim.press(input.command);
+    }
+    this.sim.runUntil(Math.floor(this.replayTarget));
+  }
+
   /** Advance real time. Feeds queued commands between loop passes. */
   update(dtMs: number): void {
     if (this.paused || this.state.status !== 'playing') return;
+    if (this.replay) {
+      this.updateReplay(dtMs);
+      return;
+    }
     // Feed the queue in small slices so a path of several moves resolves within a frame
     // but still one command per pass, as the original's single-key latch requires.
     let left = dtMs;
@@ -82,14 +112,14 @@ export class Play {
 
   /** A key press: replaces whatever is latched, exactly like the original keyboard read. */
   press(command: Command): void {
-    if (this.paused || this.state.status !== 'playing') return;
+    if (this.paused || this.replay || this.state.status !== 'playing') return;
     this.queue = [];
     this.pressNow(command);
   }
 
   /** Queue commands to be delivered in order, each once the previous one has acted. */
   enqueue(commands: Command[], replace = true): void {
-    if (this.paused || this.state.status !== 'playing') return;
+    if (this.paused || this.replay || this.state.status !== 'playing') return;
     if (replace) this.queue = [];
     this.queue.push(...commands);
   }

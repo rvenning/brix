@@ -28,6 +28,19 @@ export const ORIGINAL_BLAST_FREEZE_MS = 1470;
 
 const msToCounts = (ms: number) => Math.round((ms * PIT_HZ) / 1000);
 
+export function cloneState(s: GameState): GameState {
+  return {
+    ...s,
+    cells: s.cells.slice(),
+    cursor: { ...s.cursor },
+    falling: s.falling.map(f => ({ ...f })),
+    elevator: s.elevator ? { ...s.elevator } : null,
+    counts: [...s.counts],
+    clock: { ...s.clock },
+    events: [],
+  };
+}
+
 export interface SimulationOptions {
   /** How long a blast freezes the game, in ms. */
   blastFreezeMs?: number;
@@ -72,6 +85,25 @@ export class Simulation {
 
   press(command: Command): void {
     pressKey(this.state, command);
+  }
+
+  /** An independent copy of the simulation and its game state (for search and what-if tools). */
+  clone(): Simulation {
+    const c = new Simulation(cloneState(this.state), { blastFreezeMs: (this.blastFreeze * 1000) / PIT_HZ });
+    c.counts = this.counts;
+    c.target = this.target;
+    c.lastA = this.lastA;
+    c.lastB = this.lastB;
+    c.nextTick = this.nextTick;
+    c.freeze = this.freeze;
+    c.passes = this.passes;
+    return c;
+  }
+
+  /** Run exactly one main-loop pass. */
+  step(): void {
+    if (this.state.status === 'playing') this.pass();
+    this.target = Math.max(this.target, this.counts);
   }
 
   /** Advance simulated time by `ms`, running every loop pass that falls inside it. */
