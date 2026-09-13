@@ -45,7 +45,10 @@ export class Oracle {
     m.addHook(GAME_CS, HOOK_KEY, () => {
       const c = m.cpu;
       const mode = c.rb(c.s[2], c.r[4] + 4);
-      if (mode === 1) this.inGame = true;
+      if (mode === 1) {
+        if (!this.inGame) m.stopRequested = true; // stop exactly at the first pass of the game loop
+        this.inGame = true;
+      }
       else { this.inTree = true; return; }
       if (!this.events) return;
       const key = m.peek8(0xa3);

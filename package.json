@@ -13,7 +13,9 @@
     "typecheck": "tsc --noEmit",
     "extract-levels": "node tools/brix-extractor/extract.ts",
     "validate-levels": "node tools/brix-extractor/validate.ts",
-    "record-fixtures": "node tools/brix-oracle/record-fixtures.mjs"
+    "record-fixtures": "node tools/brix-oracle/record-fixtures.ts",
+    "replay-check": "node tools/brix-oracle/replay-check.ts",
+    "test:oracle": "BRIX_ORACLE=1 vitest run tests/oracle-replay.test.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.2",
