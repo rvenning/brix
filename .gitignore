@@ -1,0 +1,5 @@
+node_modules/
+dist/
+tools/brix-oracle/out/
+*.log
+.DS_Store

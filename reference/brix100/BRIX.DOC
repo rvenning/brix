@@ -1,0 +1,71 @@
+**************************************************************************
+
+
+                          BRIX Version 1.00
+
+
+               programmed by 10/1991 by Michael Riedel
+
+
+***************************************************************************
+
+
+         Introduction
+
+I'm a student of computer science in Karlsruhe, West Germany. After
+my last test, there were 6 weeks of emptiness lying before me. So I decided
+to fill this hole with training my VGA-Programming skills. This is
+what came out of this. 
+
+
+         The Game
+
+BRIX is an arcade-style strategy game. After the starting screen
+a tree of levels is shown. Depending on the number of the level
+you have one, two, three, ... choices. Each of the choices consists of 
+4 problems which have to be solved to get to the next level. 
+
+THE ULTIMATE GOAL IS TO SOLVE THE PROBLEM ON THE RIGHT BOTTOM.
+
+In the tree of levels, use SPACE to select one (only the blue Problems
+can be selected). 
+
+In a problem you have to move the icons together (vertically or horizontally)
+and they BLAST AWAY. There should be no icons left, or the problem is
+not solved. Attention: Sometimes it is necessary to put together three
+icons at once! On the left side the level, problem-numbers, the remaining
+time and some statistics on the icons left on the playing field are
+displayed.
+
+The selector is controlled with the cursor-keys, space toggles between
+move and select mode. During the game, ESC exits (immediately!), 
+F4 restarts the level (up to 2 times, but the time continues). If you have
+used F4, there will be no bonus count. 
+If time runs up, you can continue by pressing space (5 lives).
+
+
+         Technical issues:
+
+This game uses a 320x200, 256 color-mode. The timing-loop uses the 
+real-time-clock, so you must have at least an AT-class-computer!
+
+The game comes equipped with 112 different levels. I have written a
+level-editor to design the levels. If you want to do your own 
+level(s), write or mail to me (adress below), so that i can send you the
+level editor.
+
+
+         Release notes:
+
+I release this programm into the public domain, but if you enjoy it
+you may send me ANY amount you want (Michael Riedel, Volksbank Karlsruhe,
+West Germany, BLZ: 66190000, KtoNr.: 909599) ---- Thanks a lot!!!
+
+The best way to communicate with me is via the BITNET or INTERNET
+(see adresses below).
+
+**************************************************************************
+Michael Riedel, Klosterweg 28/L611, W-7500 Karlsruhe
+BITNET:   RY24@DKAUNI2.BITNET
+INTERNET: ry24@ibm3090.rz.uni-karlsruhe.dbp.de
+**************************************************************************
