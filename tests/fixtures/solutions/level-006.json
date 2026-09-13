@@ -1,0 +1,1 @@
+{"format":"brix-solution/1","level":6,"levelId":"original-006","description":"Found by tools/solver against the modern engine; replays to a clear through the real scheduler.","blastFreezeMs":1470,"moves":"wait wait 6,8L@7,-4,-1,0","inputs":[[1075200,1],[1092000,1],[1108800,3],[1125600,4],[1142400,2],[1159200,4]],"clearedAtCounts":3554400,"finalScore":15200}

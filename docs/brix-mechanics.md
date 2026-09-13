@@ -248,7 +248,10 @@ therefore lasts 61 × 21 ticks ≈ 70.4 s. The clock stops during blasts.
 ## ❓ Open questions
 
 - Exact typematic behaviour on period keyboards (affects how held keys feel).
-- Whether any original level *requires* the duplicate stack match to be solvable
-  (level 98 is the candidate). A solver run against the engine would settle it.
+- Whether any original level *requires* the duplicate stack match to be solvable. Level 98
+  (single blocks of types 6 and 7) is the candidate; the solver has not found a solution
+  within its budget, so this is still open.
+- Level 15 (three blocks meeting at a moving elevator) and level 81 are also unsolved by
+  the solver. Level 15 may need key timing finer than one key per frame.
 - Exact durations of the sound effects during blasts on real hardware (irrelevant
   to rules because everything freezes).

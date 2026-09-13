@@ -16,9 +16,12 @@ away before the clock runs out. Same puzzles, completely modern game.
   elevator step was recorded. The modern engine replays those 112 traces — over 230,000
   steps — and must reproduce the original's state after every single one, including the
   original's quirks (latched keys, stale elevator stack counts, duplicate stack matches).
-- **Completion.** A solver finds solutions with the modern engine; they replay as timed
-  key presses through the real scheduler, and levels without elevators have also been
-  cleared in the emulated original using those solutions.
+- **Completion.** A solver has found solutions for 69 levels (36 of the 37 without an
+  elevator, 33 of the 75 with one). All 69 replay to a clear as timed key presses through
+  the modern scheduler, and all 36 elevator-free solutions also clear the emulated
+  original when keyed in. Elevator solutions depend on sub-frame timing, so only 5 of 33
+  reproduce in the original's jittery real-time loop; their *mechanics* are covered by the
+  traces above.
 
 How the original works — with evidence and open questions — is in
 [docs/brix-mechanics.md](docs/brix-mechanics.md).

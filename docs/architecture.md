@@ -80,4 +80,4 @@ flags.
 | Rules match the original | 112 recorded traces of the emulated original, thousands of steps each, replayed event by event with a state hash after each | `tests/oracle-replay.test.ts` |
 | Rules are what the docs say | small hand-built boards | `tests/rules.test.ts` |
 | Timing is deterministic | same script at different frame sizes | `tests/simulation.test.ts` |
-| Levels are completable | solver solutions replayed through the scheduler; non-elevator solutions also played in the emulated original | `tests/solutions.test.ts`, `tools/brix-oracle/verify-solutions.ts` |
+| Levels are completable | 69 solver solutions replayed through the scheduler; the 36 elevator-free ones also clear the emulated original | `tests/solutions.test.ts`, `tools/brix-oracle/verify-solutions.ts` |
