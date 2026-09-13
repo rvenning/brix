@@ -60,6 +60,12 @@ export class Simulation {
     return this.blastFreeze ? 1 - this.freeze / this.blastFreeze : 1;
   }
 
+  /** Progress 0..1 towards the next elevator step, for smoothing elevator motion between steps. */
+  get elevatorPhase(): number {
+    if (this.freeze > 0) return 0;
+    return Math.min(1, (this.target - this.lastA) / TIMER_A_COUNTS);
+  }
+
   get elapsedMs(): number {
     return (this.counts * 1000) / PIT_HZ;
   }
@@ -73,6 +79,12 @@ export class Simulation {
     this.target += msToCounts(ms);
     while (this.counts + PASS_COUNTS <= this.target && this.state.status === 'playing') this.pass();
     if (this.state.status !== 'playing') this.target = this.counts;
+  }
+
+  /** Run loop passes until simulated time reaches exactly `counts` (used to replay recorded inputs). */
+  runUntil(counts: number): void {
+    while (this.counts + PASS_COUNTS <= counts && this.state.status === 'playing') this.pass();
+    this.target = Math.max(this.target, this.counts);
   }
 
   private pass(): void {
