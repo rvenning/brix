@@ -119,6 +119,10 @@ h1, h2, h3 { font-family: var(--font-display); margin: 0; letter-spacing: 0.01em
 .menu { display: grid; gap: 12px; width: 100%; }
 .menu .btn { width: 100%; }
 .title-foot { color: var(--ink-faint); font-size: 0.8rem; max-width: 380px; line-height: 1.5; }
+.version { margin: -16px 0 0; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: center; color: var(--ink-faint); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+.version-status.ok { color: var(--good); font-weight: 700; }
+.version-status.ok::before { content: '✓ '; }
+.update-btn { min-height: 34px; padding: 0 14px; font-size: 0.85rem; --b-bg: linear-gradient(180deg, #ffe680, #ffc21a); --b-ink: var(--accent-ink); }
 
 /* ---------- play ---------- */
 

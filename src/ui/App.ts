@@ -13,6 +13,7 @@ import {
   type LevelRecord, type Settings,
 } from '../storage/storage.ts';
 import { StateMachine } from './stateMachine.ts';
+import { BUILD, fetchLatestBuild, updateToLatest, versionLabel } from '../version.ts';
 import { h, svgIcon, formatScore, focusFirst } from './dom.ts';
 import { PlayScreen, type ClearedResult, type PlayMode } from './screens/PlayScreen.ts';
 import { TreeScreen } from './screens/TreeScreen.ts';
@@ -178,8 +179,30 @@ export class App {
             h('button', { class: 'btn', onclick: () => { start(); this.showSettings(); } }, 'Settings')),
         ),
         h('p', { class: 'title-foot' }, 'All 112 puzzles of BRIX 1.00 by Michael Riedel (1991), reproduced exactly and reimagined for today.'),
+        this.versionLine(),
       ));
     this.show({ el, onKey: e => { if (e.code === 'Escape') return true; return false; } });
+  }
+
+  private versionLine(): HTMLElement {
+    const status = h('span', { class: 'version-status', 'aria-live': 'polite' });
+    const line = h('p', { class: 'version' }, h('span', {}, `Version ${versionLabel()}`), status);
+    if (import.meta.env.PROD) {
+      status.textContent = 'Checking…';
+      void fetchLatestBuild().then(latest => {
+        if (!latest) { status.textContent = ''; return; }
+        if (latest.sha === BUILD.sha) { status.textContent = 'Latest'; status.classList.add('ok'); return; }
+        status.replaceChildren(h('button', {
+          class: 'btn update-btn', onclick: (e: Event) => {
+            const b = e.currentTarget as HTMLButtonElement;
+            b.disabled = true;
+            b.textContent = 'Updating…';
+            void updateToLatest();
+          },
+        }, `Update to ${versionLabel(latest)}`));
+      });
+    }
+    return line;
   }
 
   // ------------------------------------------------------------------ run
