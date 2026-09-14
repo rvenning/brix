@@ -117,10 +117,21 @@ export class Play {
     this.pressNow(command);
   }
 
-  /** Queue commands to be delivered in order, each once the previous one has acted. */
+  /**
+   * Queue commands to be delivered in order, each once the previous one has acted.
+   * A new gesture (`replace`) starts by replacing whatever is latched, just as a key press
+   * would: otherwise a command that can never act (a pick-up aimed at a block that fell or
+   * blasted before the cursor arrived) would hold every later tap in the queue forever.
+   */
   enqueue(commands: Command[], replace = true): void {
     if (this.paused || this.replay || this.state.status !== 'playing') return;
-    if (replace) this.queue = [];
+    if (replace) {
+      this.queue = [];
+      if (this.state.latched !== null && commands.length) {
+        this.pressNow(commands[0]);
+        commands = commands.slice(1);
+      }
+    }
     this.queue.push(...commands);
   }
 
