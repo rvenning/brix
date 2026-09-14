@@ -3,6 +3,13 @@
 
 type Wave = OscillatorType;
 
+/** Sounds allowed to overlap. Beyond this, new effects are skipped rather than overloading the audio thread. */
+export const MAX_VOICES = 24;
+/** Music scheduling lookahead (s). */
+const LOOKAHEAD = 0.2;
+/** Silence (ms) after which the context is suspended, so the audio thread does no work on quiet screens. */
+export const IDLE_SUSPEND_MS = 3000;
+
 export class SoundEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
@@ -15,6 +22,9 @@ export class SoundEngine {
   private nextNoteTime = 0;
   private step = 0;
   private intensity = 0;
+  /** Sources currently scheduled or playing. */
+  activeVoices = 0;
+  private idleTimer: number | null = null;
 
   /** Must be called from a user gesture before anything is audible. */
   unlock(): void {
@@ -49,11 +59,45 @@ export class SoundEngine {
     if (!on) this.stopMusic();
   }
 
+  /**
+   * Every node of a voice is disconnected once its source ends. WebKit (iPad Safari) keeps
+   * connected nodes alive, so without this the audio graph grows with every sound and the
+   * audio thread eventually underruns, which is heard as crackling.
+   */
+  private track(src: AudioScheduledSourceNode, nodes: AudioNode[]): void {
+    this.activeVoices++;
+    src.onended = () => {
+      this.activeVoices = Math.max(0, this.activeVoices - 1);
+      for (const n of nodes) n.disconnect();
+      this.scheduleIdleSuspend();
+    };
+  }
+
+  private scheduleIdleSuspend(): void {
+    if (this.activeVoices > 0 || this.musicTimer !== null || this.idleTimer !== null) return;
+    this.idleTimer = window.setTimeout(() => {
+      this.idleTimer = null;
+      if (this.activeVoices === 0 && this.musicTimer === null && this.ctx?.state === 'running') void this.ctx.suspend();
+    }, IDLE_SUSPEND_MS);
+  }
+
+  private wake(): void {
+    if (this.idleTimer !== null) { window.clearTimeout(this.idleTimer); this.idleTimer = null; }
+    if (this.ctx && this.ctx.state !== 'running' && this.ctx.state !== 'closed') void this.ctx.resume();
+  }
+
+  /** Start time for a sound: never in the past, where ramps would jump and click. */
+  private startAt(delay: number): number {
+    const ctx = this.ctx!;
+    return ctx.currentTime + Math.max(0, delay);
+  }
+
   private tone(freq: number, dur: number, opts: { type?: Wave; gain?: number; slideTo?: number; delay?: number; attack?: number; bus?: 'sfx' | 'music'; filter?: number } = {}): void {
     const ctx = this.ctx;
-    if (!ctx) return;
+    if (!ctx || this.activeVoices >= MAX_VOICES) return;
+    this.wake();
     const bus = opts.bus === 'music' ? this.musicBus! : this.sfxBus!;
-    const t = ctx.currentTime + (opts.delay ?? 0);
+    const t = this.startAt(opts.delay ?? 0);
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
     osc.type = opts.type ?? 'sine';
@@ -64,22 +108,26 @@ export class SoundEngine {
     g.gain.exponentialRampToValueAtTime(peak, t + attack);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     let node: AudioNode = osc;
+    const chain: AudioNode[] = [osc, g];
     if (opts.filter) {
       const f = ctx.createBiquadFilter();
       f.type = 'lowpass';
       f.frequency.value = opts.filter;
       node.connect(f);
       node = f;
+      chain.push(f);
     }
     node.connect(g).connect(bus);
+    this.track(osc, chain);
     osc.start(t);
     osc.stop(t + dur + 0.05);
   }
 
   private hiss(dur: number, gain: number, from: number, to: number, delay = 0): void {
     const ctx = this.ctx;
-    if (!ctx || !this.noise) return;
-    const t = ctx.currentTime + delay;
+    if (!ctx || !this.noise || this.activeVoices >= MAX_VOICES) return;
+    this.wake();
+    const t = this.startAt(delay);
     const src = ctx.createBufferSource();
     src.buffer = this.noise;
     const f = ctx.createBiquadFilter();
@@ -91,6 +139,7 @@ export class SoundEngine {
     g.gain.setValueAtTime(gain, t);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
     src.connect(f).connect(g).connect(this.sfxBus!);
+    this.track(src, [src, f, g]);
     src.start(t);
     src.stop(t + dur + 0.05);
   }
@@ -146,6 +195,7 @@ export class SoundEngine {
 
   startMusic(): void {
     if (!this.ctx || !this.musicOn || this.musicTimer !== null) return;
+    this.wake();
     this.nextNoteTime = this.ctx.currentTime + 0.1;
     this.step = 0;
     this.musicTimer = window.setInterval(() => this.schedule(), 50);
@@ -154,15 +204,23 @@ export class SoundEngine {
   stopMusic(): void {
     if (this.musicTimer !== null) window.clearInterval(this.musicTimer);
     this.musicTimer = null;
+    this.scheduleIdleSuspend();
   }
 
   // A gentle pentatonic loop: bass on beats, arpeggio on eighths, sparkles when urgent.
-  private schedule(): void {
+  schedule(): void {
     const ctx = this.ctx!;
     const beat = 60 / (100 + this.intensity * 30) / 2;
     const chords = [[0, 7, 12, 16], [-3, 4, 9, 12], [-7, 0, 5, 9], [-5, 2, 7, 11]];
     const root = 261.63;
-    while (this.nextNoteTime < ctx.currentTime + 0.2) {
+    // A timer that fired late (a busy frame, a throttled tab) must not play every missed
+    // note at once: skip ahead to now instead.
+    if (this.nextNoteTime < ctx.currentTime) {
+      const missed = Math.ceil((ctx.currentTime - this.nextNoteTime) / beat);
+      this.nextNoteTime += missed * beat;
+      this.step += missed;
+    }
+    while (this.nextNoteTime < ctx.currentTime + LOOKAHEAD) {
       const bar = Math.floor(this.step / 8) % chords.length;
       const chord = chords[bar];
       const i = this.step % 8;
